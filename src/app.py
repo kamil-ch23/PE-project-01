@@ -3,9 +3,14 @@ import datetime, socket
 
 app = Flask(__name__)
 
+@app.route('/')
+
+def liveness():
+    return "OK"
+
 @app.route('/api/v1/details')
 
-def details():
+def readiness():
     return jsonify({
         'time': datetime.datetime.now(),
         'hostname': socket.gethostname()
