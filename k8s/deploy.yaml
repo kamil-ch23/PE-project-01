@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: python-app
-        image: kamilch84/pe-project-01:v1.4
+        image: kamilch84/pe-project-01:v1.5
         ports:
         - containerPort: 5000
