@@ -13,7 +13,8 @@ def liveness():
 def readiness():
     return jsonify({
         'time': datetime.datetime.now(),
-        'hostname': socket.gethostname()
+        'hostname': socket.gethostname(),
+        'message': 'Service is ready'
     })
 
 @app.route('/api/v1/healthz')
