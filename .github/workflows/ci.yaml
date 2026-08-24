@@ -22,4 +22,4 @@ jobs:
         uses: docker/build-push-action@v7
         with:
           push: true
-          tags: kamilch84/pe-project-01:${{GITHUB_SHA}}
+          tags: kamilch84/pe-project-01:${{ github.sha }}
