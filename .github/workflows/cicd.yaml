@@ -34,11 +34,18 @@ jobs:
     needs: ci
     runs-on: self-hosted
     steps:
+    
+      - name: checkout code
+        uses: actions/checkout@v3
 
-      - name: modify values file
+      - name: Get from CI name of the image tag
         shell: bash
         run: |
           echo SHORT_SHA=${{needs.ci.outputs.commit_id}} >> $GITHUB_ENV
+      
+      - name: Update image tag in values.yaml
+        shell: bash
+        run: |
           sed -i "s/tag:.*/tag: ${{ env.SHORT_SHA }}/" charts/python-app-helm/values.yaml
 
       - name: Install ArgoCD CLI
