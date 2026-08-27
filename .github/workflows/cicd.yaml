@@ -27,11 +27,19 @@ jobs:
         with:
           push: true
           tags: kamilch84/pe-project-01:${{ env.COMMIT_ID }}
+    outputs:
+      commit_id: ${{ env.COMMIT_ID }}
 
   cd:
     needs: ci
     runs-on: self-hosted
     steps:
+
+      - name: modify values file
+        shell: bash
+        run: |
+          echo SHORT_SHA=${{needs.ci.outputs.commit_id}} >> $GITHUB_ENV
+          sed -i "s/tag:.*/tag: ${{ env.SHORT_SHA }}/" charts/python-app-helm/values.yaml
 
       - name: Install ArgoCD CLI
         shell: bash
