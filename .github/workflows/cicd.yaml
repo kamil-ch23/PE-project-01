@@ -1,4 +1,4 @@
-name: ci
+name: cicd
 
 on:
   push:
@@ -8,8 +8,8 @@ on:
       - main
 
 jobs:
-  docker:
-    runs-on: self-hosted
+  ci:
+    runs-on: ubuntu-latest
     steps:
       - name: My Commit ID
         shell: bash
@@ -27,3 +27,17 @@ jobs:
         with:
           push: true
           tags: kamilch84/pe-project-01:${{ env.COMMIT_ID }}
+
+  cd:
+    needs: ci
+    runs-on: self-hosted
+    steps:
+      - name: ArgoCD app sync
+        shell: bash
+        run: |
+          argocd login ${{ vars.ARGOCD_ADDRESS }} \
+            --insecure \
+            --grpc-web \
+            --username ${{ vars.ARGOCD_USERNAME }} \
+            --password ${{ secrets.ARGOCD_PASS }}
+          argocd app sync python-app-argo
