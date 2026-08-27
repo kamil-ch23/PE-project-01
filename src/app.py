@@ -14,7 +14,7 @@ def readiness():
     return jsonify({
         'time': datetime.datetime.now(),
         'hostname': socket.gethostname(),
-        'message': 'Service is ready. OK.'
+        'message': 'Service is ready.'
     })
 
 @app.route('/api/v1/healthz')
